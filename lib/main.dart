@@ -115,6 +115,17 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Image.network("https://upload.wikimedia.org/wikipedia/commons/1/17/Google-flutter-logo.png", width: 200,),
+            Container(
+              margin: EdgeInsets.only(bottom: 100),
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.blue.withOpacity(0.25),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Image.asset("assets/images/Google-flutter-logo.png", width: 100,),
+            ),
+
             const Text(
               'You have pushed the button this many times:',
               style: TextStyle(color: Colors.green, backgroundColor: Colors.amber),
@@ -127,10 +138,10 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 RaisedButton(
-                  child: Text("Decrement Counter"),
+                  child: Text("Decrement"),
                   onPressed: _decrementCounter,
                 ),
-                PanicButton(display: Text("Increment"), onPressed: _incrementCounter)
+                PanicButton(display: Text("Increment", style: TextStyle(color: Colors.white)), onPressed: _incrementCounter)
               ],
             )
           ],
