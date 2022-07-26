@@ -1,3 +1,4 @@
+import 'package:counter_app/FancyButton.dart';
 import 'package:counter_app/PanicButton.dart';
 import 'package:flutter/material.dart';
 
@@ -50,6 +51,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  bool _reversed = false;
+  final List<UniqueKey> _buttonKeys = [UniqueKey(), UniqueKey()];
 
   void _incrementCounter() {
     setState(() {
@@ -75,10 +78,17 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _swap() {
+    setState(() {
+      _reversed = !_reversed;
+    });
+  }
+
   void _resetCount() {
     setState(() {
       _counter = 0;
     });
+    _swap();
   }
 
   @override
@@ -89,6 +99,26 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    final incFancy = FancyButton(
+        key: _buttonKeys.first,
+        onPressed: _incrementCounter,
+        child: const Text(
+          "Increment",
+          style: TextStyle(color: Colors.white),
+        ));
+    final decFancy = FancyButton(
+        key: _buttonKeys.last,
+        onPressed: _decrementCounter,
+        child: const Text(
+          "Decrement",
+          style: TextStyle(color: Colors.white),
+        ));
+
+    List<Widget> _buttons = <Widget>[incFancy, decFancy];
+
+    if (_reversed) {
+      _buttons = _buttons.reversed.toList();
+    }
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -117,8 +147,8 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Image.network("https://upload.wikimedia.org/wikipedia/commons/1/17/Google-flutter-logo.png", width: 200,),
             Container(
-              margin: EdgeInsets.only(bottom: 100),
-              padding: EdgeInsets.all(8),
+              margin: const EdgeInsets.only(bottom: 100),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: Colors.blue.withOpacity(0.25),
                 borderRadius: BorderRadius.circular(4),
@@ -138,11 +168,15 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 RaisedButton(
-                  child: Text("Decrement"),
                   onPressed: _decrementCounter,
+                  child: const Text("Decrement"),
                 ),
-                PanicButton(display: Text("Increment", style: TextStyle(color: Colors.white)), onPressed: _incrementCounter)
+                PanicButton(display: const Text("Increment", style: TextStyle(color: Colors.white)), onPressed: _incrementCounter)
               ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: _buttons,
             )
           ],
         ),

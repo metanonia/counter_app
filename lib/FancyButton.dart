@@ -41,4 +41,4 @@ List<Color> colors = [
   Colors.purple,
   Colors.amber,
   Colors.lightBlue,
-]
+];
